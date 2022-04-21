@@ -1,7 +1,4 @@
-﻿using APIForTennis.Helpers;
-using Newtonsoft.Json;
-
-namespace APIForTennis.Models;
+﻿namespace APIForTennis.Models;
 
 public class Players
 {

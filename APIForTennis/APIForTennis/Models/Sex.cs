@@ -1,8 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System.Runtime.Serialization;
-
-namespace APIForTennis.Models;
+﻿namespace APIForTennis.Models;
 
 [JsonConverter(typeof(StringEnumConverter))]
 public enum Sex

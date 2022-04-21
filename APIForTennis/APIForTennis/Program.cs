@@ -1,9 +1,3 @@
-using APIForTennis.Helpers;
-using APIForTennis.Models;
-using Microsoft.OpenApi.Models;
-using Newtonsoft.Json;
-using System.IO;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -17,11 +11,8 @@ builder.Services.AddSwaggerGen(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
