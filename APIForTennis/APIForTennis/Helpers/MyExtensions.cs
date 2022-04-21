@@ -9,4 +9,8 @@ public static class MyExtensions
         if (mySex == "Male") return "Man";
         return "Female";
     }
+    public static double AddMediane(this PlayersWithMediane playerOne, PlayersWithMediane playerTwo)
+    {
+        return playerOne.Size + playerTwo.Size;
+    }
 }
