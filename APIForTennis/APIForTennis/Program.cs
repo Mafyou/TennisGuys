@@ -1,3 +1,7 @@
+using APIForTennis.Helpers;
+using APIForTennis.Models;
+using Newtonsoft.Json;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -20,6 +24,12 @@ var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
+
+dynamic? json = JsonConvert.DeserializeObject(File.ReadAllText(Directory.GetCurrentDirectory() + "/Datas/headtohead.json"));
+
+var playersJson = JsonConvert.SerializeObject(json?.players);
+
+var datas = JsonConvert.DeserializeObject<List<Players>>(playersJson);
 
 app.MapGet("/weatherforecast", () =>
 {
