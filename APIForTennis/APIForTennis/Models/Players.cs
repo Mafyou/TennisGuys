@@ -1,6 +1,5 @@
 ﻿using APIForTennis.Helpers;
 using Newtonsoft.Json;
-using System.Runtime.Serialization;
 
 namespace APIForTennis.Models;
 

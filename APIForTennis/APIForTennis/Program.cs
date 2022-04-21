@@ -35,6 +35,10 @@ app.MapGet("/players", () =>
 {
     return players.OrderBy(x => x.MyLeaderBoard.Rank);
 });
+app.MapPost("/playerId", (int id) =>
+{
+    return players.SingleOrDefault(x => x.Id == id);
+});
 
 app.MapGet("/weatherforecast", () =>
 {
