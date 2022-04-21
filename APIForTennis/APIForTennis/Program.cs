@@ -1,5 +1,6 @@
-using APIForTennis.Helpers;
 using APIForTennis.Models;
+using APIForTennis.Helpers;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,7 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Les mecs du tennis", Version = "v1" });
+});
 
 var app = builder.Build();
 
@@ -25,11 +29,12 @@ var summaries = new[]
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
-dynamic? json = JsonConvert.DeserializeObject(File.ReadAllText(Directory.GetCurrentDirectory() + "/Datas/headtohead.json"));
+var players = initialize();
 
-var playersJson = JsonConvert.SerializeObject(json?.players);
-
-var datas = JsonConvert.DeserializeObject<List<Players>>(playersJson);
+app.MapGet("/players", () =>
+{
+    return players.OrderBy(x => x.MyLeaderBoard.Rank);
+});
 
 app.MapGet("/weatherforecast", () =>
 {
@@ -46,6 +51,20 @@ app.MapGet("/weatherforecast", () =>
 .WithName("GetWeatherForecast");
 
 app.Run();
+
+List<Players> initialize()
+{
+    try
+    {
+        dynamic? json = JsonConvert.DeserializeObject(File.ReadAllText(Directory.GetCurrentDirectory() + "/Datas/headtohead.json"));
+        var playersJson = JsonConvert.SerializeObject(json?.players);
+        return JsonConvert.DeserializeObject<List<Players>>(playersJson);
+    }
+    catch (Exception ex)
+    {
+        throw;
+    }
+}
 
 internal record WeatherForecast(DateTime Date, int TemperatureC, string? Summary)
 {
